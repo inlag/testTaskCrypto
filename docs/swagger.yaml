@@ -1,0 +1,65 @@
+definitions:
+  database.AveragePrice:
+    properties:
+      end:
+        type: string
+      price:
+        type: number
+      start:
+        type: string
+    type: object
+  http.response:
+    properties:
+      BTC-USD:
+        type: number
+      time:
+        type: integer
+    type: object
+info:
+  contact:
+    email: inlag333@yandex.ru
+    name: Sergey Khorbin
+  description: Мини сервер для получения текущей цены BTC, а так же средней стоимости в диапазоне 5 минут за сутки.
+  license: {}
+  title: Swagger testTaskCrypto
+  version: "1.0"
+paths:
+  /price:
+    get:
+      description: Возвращает текущую цену BTC.
+      operationId: get-price
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Возвращает текущую цену BTC.
+      tags:
+      - Price
+  /price/data:
+    get:
+      description: Возвращает данные по средней стоимости BTC, с интервалом 5 минут.
+      operationId: get-price-data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/database.AveragePrice'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Возвращает данные по средней стоимости BTC.
+      tags:
+      - Price
+swagger: "2.0"

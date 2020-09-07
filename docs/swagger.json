@@ -1,0 +1,99 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Мини сервер для получения текущей цены BTC, а так же средней стоимости в диапазоне 5 минут за сутки.",
+        "title": "Swagger testTaskCrypto",
+        "contact": {
+            "name": "Sergey Khorbin",
+            "email": "inlag333@yandex.ru"
+        },
+        "license": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/price": {
+            "get": {
+                "description": "Возвращает текущую цену BTC.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Price"
+                ],
+                "summary": "Возвращает текущую цену BTC.",
+                "operationId": "get-price",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/price/data": {
+            "get": {
+                "description": "Возвращает данные по средней стоимости BTC, с интервалом 5 минут.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Price"
+                ],
+                "summary": "Возвращает данные по средней стоимости BTC.",
+                "operationId": "get-price-data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/database.AveragePrice"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "database.AveragePrice": {
+            "type": "object",
+            "properties": {
+                "end": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "start": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.response": {
+            "type": "object",
+            "properties": {
+                "BTC-USD": {
+                    "type": "number"
+                },
+                "time": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

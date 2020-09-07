@@ -27,7 +27,7 @@ func (s *Sql) Calculate(fromWssChan chan float64, sqlToHttp chan []AveragePrice,
 		startTime         = time.Now()
 		saveTimerDuration = time.Minute * 5
 
-		cleanupTimer = time.NewTimer(time.Hour * 24)
+		cleanupTimer = time.NewTimer(time.Hour)
 		saveTimer    = time.NewTimer(saveTimerDuration)
 	)
 

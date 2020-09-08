@@ -48,7 +48,7 @@ func (s *Sql) Calculate(fromWssChan chan float64, sqlToHttp chan []AveragePrice,
 			if errCleanup := s.CleanupAverage(); errCleanup != nil {
 				errChan <- errCleanup
 			}
-			cleanupTimer.Reset(time.Hour * 24)
+			cleanupTimer.Reset(time.Hour * 1)
 
 		case <-sqlToHttp:
 			errGetAvg := s.GetAverage(sqlToHttp)
@@ -98,7 +98,7 @@ func (s *Sql) GetAverage(a chan []AveragePrice) error {
 
 func (s *Sql) CleanupAverage() error {
 
-	result, errExec := s.pool.Exec(`DELETE FROM average_price WHERE "end"<$1`, time.Now().AddDate(0, 0, -1))
+	result, errExec := s.pool.Exec(`DELETE FROM average_price WHERE "end"< NOW() - INTERVAL '1 day';`)
 	if errExec != nil {
 		return errors.Wrap(errExec, "deleting rows is failed")
 	}

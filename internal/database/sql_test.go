@@ -169,11 +169,11 @@ func generateOldAverageData(count int) {
 		return
 	}
 	var avgs []AveragePrice
-	oldTime := time.Now().Add(time.Hour * -2)
+	oldTime := time.Now().Add(-time.Hour * 26)
 	for i := 0; i <= count; i++ {
 		avg := AveragePrice{
-			Start: oldTime.Add(time.Minute * 5),
-			End:   oldTime.Add(time.Minute * 5),
+			Start: oldTime,
+			End:   oldTime,
 			Price: rand.Float64(),
 		}
 		avgs = append(avgs, avg)
